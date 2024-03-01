@@ -1,3 +1,4 @@
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:paltan/num_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,40 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   SharedPreferences? prefs;
   List<Widget> content = [const Text("Chargement...")];
+  static const XTypeGroup importTxtTypes = XTypeGroup(
+    label: "words list",
+    extensions: <String>["txt", "words"]
+  );
+
+  void importWordList() async {
+    if (prefs == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Mots pas encore chargés, veuillez attendre quelques secondes."))
+      );
+      return;
+    }
+    final XFile? file = await openFile(acceptedTypeGroups: <XTypeGroup>[importTxtTypes]);
+    if (file == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Aucun fichier séléctionné"))
+      );
+      return;
+    }
+    final String data = await file.readAsString();
+    List<String> savedWords = prefs!.getStringList("paltan.words") ?? [];
+    int wordsCount = 0;
+    for (String word in data.split("\n")) {
+      word = word.toLowerCase();
+      if (word.isNotEmpty && !savedWords.contains(word)) {
+        savedWords.add(word);
+        wordsCount++;
+      }
+    }
+    prefs!.setStringList("paltan.words", savedWords);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("$wordsCount mots ajoutés"))
+    );
+  }
 
   @override
   void initState() {
@@ -41,6 +76,22 @@ class _SettingsState extends State<Settings> {
             maxVal: 30,
             value: prefs!.getInt("paltan.guessTime") ?? 20,
             onValueChange: (int value) async {await prefs!.setInt("paltan.guessTime", value);},
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(right: 50),
+                  child: const Text("Importer un fichier de mots"),
+                ),
+                IconButton(
+                  onPressed: importWordList,
+                  icon: const Icon(Icons.download),
+                )
+              ],
+            ),
           ),
         ];
       });
