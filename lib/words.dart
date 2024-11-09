@@ -51,6 +51,9 @@ class _WordsState extends State<Words> {
   }
 
   void addWord(String word) {
+    if (words.contains(word)) {
+      return;
+    }
     setState(() {
       words.add(word);
       applyFilter(makeTextPretty(_searchController.text));
