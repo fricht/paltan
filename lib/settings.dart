@@ -105,7 +105,7 @@ class _SettingsState extends State<Settings> {
             TextButton(onPressed: () {
               Navigator.of(context).pop();
               flushWords();
-            }, child: const Text("Tout suprimer")),
+            }, child: const Text("Tout suprimer", style: TextStyle(color: Colors.red))),
           ],
         );
       }
@@ -185,7 +185,11 @@ class _SettingsState extends State<Settings> {
               ],
             ),
           ),
-          ElevatedButton(onPressed: showConfirmFlushWordsDialog, child: const Text("Reset liste mots")),
+          ElevatedButton(
+            onPressed: showConfirmFlushWordsDialog,
+            style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)),
+            child: const Text("Reset liste mots"),
+          ),
         ];
       });
     });
