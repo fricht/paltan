@@ -38,8 +38,12 @@ class _WordsState extends State<Words> {
     filteredWords = words.where((element) => element.contains(filter)).toList();
   }
 
+  String makeTextPretty(String txt) {
+    return txt.toLowerCase().trim();
+  }
+
   void handleTextChange(String rawText) {
-    String text = rawText.toLowerCase();
+    String text = makeTextPretty(rawText);
     setState(() {
       isAddable = !words.contains(text) && text.isNotEmpty;
       applyFilter(text);
@@ -49,7 +53,7 @@ class _WordsState extends State<Words> {
   void addWord(String word) {
     setState(() {
       words.add(word);
-      applyFilter(_searchController.text.toLowerCase());
+      applyFilter(makeTextPretty(_searchController.text));
     });
     prefs!.setStringList("paltan.words", words);
   }
@@ -57,7 +61,7 @@ class _WordsState extends State<Words> {
   void removeWord(String word) {
     setState(() {
       words.remove(word);
-      applyFilter(_searchController.text.toLowerCase());
+      applyFilter(makeTextPretty(_searchController.text));
     });
     prefs!.setStringList("paltan.words", words);
     ScaffoldMessenger.of(context).showSnackBar(
@@ -89,9 +93,10 @@ class _WordsState extends State<Words> {
                   icon: const Icon(Icons.add),
                   onPressed: !isAddable ? null : () {
                     FocusScope.of(context).unfocus();
-                    addWord(_searchController.text.toLowerCase());
+                    addWord(makeTextPretty(_searchController.text));
                     _searchController.text = "";
                     setState(() {
+                      isAddable = false;
                       applyFilter("");
                     });
                   },
