@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:paltan/num_picker.dart';
+import 'package:paltan/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 
@@ -21,23 +22,17 @@ class _SettingsState extends State<Settings> {
 
   void importWordList() async {
     if (prefs == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Mots pas encore chargés, veuillez attendre quelques secondes."))
-      );
+      showSnackBar(context, const Text("Mots pas encore chargés, veuillez attendre quelques secondes."), null);
       return;
     }
     FilePickerResult? file = await FilePicker.platform.pickFiles();
     if (file == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Aucun fichier séléctionné"))
-      );
+      showSnackBar(context, const Text("Aucun fichier séléctionné"), null);
       return;
     }
     String? path = file.files.single.path;
     if (path == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Erreur lors de l'optension du chemin."))
-      );
+      showSnackBar(context, const Text("Erreur lors de l'optension du chemin."), null);
       return;
     }
     final String data = await File(path).readAsString();
@@ -51,23 +46,17 @@ class _SettingsState extends State<Settings> {
       }
     }
     prefs!.setStringList("paltan.words", savedWords);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("$wordsCount mots ajoutés"))
-    );
+    showSnackBar(context, Text("$wordsCount mots ajoutés"), null);
   }
 
   void exportWordList() async {
     if (prefs == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Mots pas encore chargés, veuillez attendre quelques secondes."))
-      );
+      showSnackBar(context, const Text("Mots pas encore chargés, veuillez attendre quelques secondes."), null);
       return;
     }
     List<String>? words = prefs!.getStringList("paltan.words");
     if (words == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Aucun mot à exporter"))
-      );
+      showSnackBar(context, const Text("Aucun mot à exporter"), null);
       return;
     }
     String fileData = "";
@@ -82,13 +71,9 @@ class _SettingsState extends State<Settings> {
       bytes: Uint8List.fromList(utf8.encode(fileData))
     );
     if (filePath == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-       const SnackBar(content: Text("Mots non exportés, aucun fichier séléctionné"))
-      );
+      showSnackBar(context, const Text("Mots non exportés, aucun fichier séléctionné"), null);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Mots exportés : $filePath"))
-      );
+      showSnackBar(context, Text("Mots exportés : $filePath"), null);
     }
   }
 
@@ -101,7 +86,7 @@ class _SettingsState extends State<Settings> {
           content: const Text("Vous vous apprêtez a supprimer tous les mots."
               "Vous pouvez les exporter pour les réimporter ultérieurement."),
           actions: [
-            TextButton(onPressed: () {Navigator.of(context).pop();}, child: Text("Annuler")),
+            TextButton(onPressed: () {Navigator.of(context).pop();}, child: const Text("Annuler")),
             TextButton(onPressed: () {
               Navigator.of(context).pop();
               flushWords();
@@ -114,15 +99,11 @@ class _SettingsState extends State<Settings> {
 
   void flushWords() {
     if (prefs == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Mots pas encore chargés, veuillez attendre quelques secondes."))
-      );
+      showSnackBar(context, const Text("Mots pas encore chargés, veuillez attendre quelques secondes."), null);
       return;
     }
     prefs!.remove("paltan.words");
-    ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("La liste de mots a été entièrement supprimée."))
-    );
+    showSnackBar(context, const Text("La liste de mots a été entièrement supprimée."), null);
   }
 
   @override
@@ -187,7 +168,7 @@ class _SettingsState extends State<Settings> {
           ),
           ElevatedButton(
             onPressed: showConfirmFlushWordsDialog,
-            style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)),
+            style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll<Color>(Colors.red)),
             child: const Text("Reset liste mots"),
           ),
         ];

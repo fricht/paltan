@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paltan/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -14,7 +15,7 @@ class _WordsState extends State<Words> {
   List<String> words = [];
   List<String> filteredWords = [];
   bool isAddable = false;
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -67,17 +68,12 @@ class _WordsState extends State<Words> {
       applyFilter(makeTextPretty(_searchController.text));
     });
     prefs!.setStringList("paltan.words", words);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("$word supprimé"),
-        action: SnackBarAction(
-          label: "Annuler",
-          onPressed: () {
-            addWord(word);
-          }
-        ),
-      )
-    );
+    showSnackBar(context, Text("$word supprimé"), SnackBarAction(
+        label: "Annuler",
+        onPressed: () {
+          addWord(word);
+        }
+    ));
   }
 
   @override
@@ -92,6 +88,7 @@ class _WordsState extends State<Words> {
             margin: const EdgeInsets.only(top: 10, bottom: 10),
             child: TextField(
               decoration: InputDecoration(
+                hintText: "rechercher ou ajouter un mot",
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.add),
                   onPressed: !isAddable ? null : () {

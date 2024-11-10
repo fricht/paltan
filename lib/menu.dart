@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:paltan/game.dart';
 import 'package:paltan/settings.dart';
+import 'package:paltan/utils.dart';
 import 'package:paltan/words.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -66,12 +67,12 @@ class _MenuState extends State<Menu> {
 
   void launchGame() {
     if (prefs == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Error : prefs is null, can't launch game")));
+      showSnackBar(context, const Text("Error : prefs is null, can't launch game"), null);
       return;
     }
     String? pickedWord = getWord();
     if (pickedWord == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Erreur lors du chargement du mot.")));
+      showSnackBar(context, const Text("Erreur lors du chargement du mot."), null);
       return;
     }
     final List<int> times = [3, prefs!.getInt("paltan.wordTime") ?? 10, prefs!.getInt("paltan.drawTime") ?? 5, prefs!.getInt("paltan.guessTime") ?? 20];
@@ -105,8 +106,8 @@ class _MenuState extends State<Menu> {
                 width: 150,
                 height: 50,
                 child: ElevatedButton(
-                  child: const Text("Jouer"),
                   onPressed: launchGame,
+                  child: const Text("Jouer"),
                 ),
               ),
             ),
