@@ -90,7 +90,7 @@ class _SettingsState extends State<Settings> {
             TextButton(onPressed: () {
               Navigator.of(context).pop();
               flushWords();
-            }, child: const Text("Tout suprimer", style: TextStyle(color: Colors.red))),
+            }, child: const Text("Tout suprimer", style: TextStyle(color: Colors.redAccent))),
           ],
         );
       }
