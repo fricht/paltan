@@ -140,6 +140,27 @@ class _MenuState extends State<Menu> {
                 ),
               ),
             ),
+            Container(
+              margin: const EdgeInsets.only(top: 50),
+              child: SizedBox(
+                width: 150,
+                height: 50,
+                child: ElevatedButton(
+                  child: const Text("Règles"),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          title: Text("Règles du jeu"),
+                          content: Text("Lorem ipsum dolor sit amet"),
+                        );
+                      }
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
