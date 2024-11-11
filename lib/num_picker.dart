@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:paltan/utils.dart';
 
 
 class NumberPicker extends StatefulWidget {
@@ -74,7 +75,8 @@ class _NumberPickerState extends State<NumberPicker> {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue)
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            border: Border.all(color: color4)
           ),
           child: Text(widget.value.toString()),
         ),

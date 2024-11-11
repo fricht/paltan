@@ -168,7 +168,10 @@ class _SettingsState extends State<Settings> {
           ),
           ElevatedButton(
             onPressed: showConfirmFlushWordsDialog,
-            style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll<Color>(Colors.red)),
+            style: const ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll<Color>(color3),
+              foregroundColor: WidgetStatePropertyAll<Color>(color1),
+            ),
             child: const Text("Reset liste mots"),
           ),
         ];

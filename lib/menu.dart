@@ -19,8 +19,8 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   SharedPreferences? prefs;
   Random random = Random();
-  int current_index = 0;
-  List<String>? shuffeled_words;
+  int currentIndex = 0;
+  List<String>? shuffledWords;
   String hash = "";
 
   @override
@@ -48,20 +48,20 @@ class _MenuState extends State<Menu> {
     String hash = getWordsHash(words);
     if (hash != this.hash) {
       this.hash = hash;
-      shuffeled_words = words;
+      shuffledWords = words;
       // Done : shuffle
-      shuffeled_words!.shuffle();
-      current_index = 0;
+      shuffledWords!.shuffle();
+      currentIndex = 0;
     }
     // pick a word
-    if (shuffeled_words == null) {
+    if (shuffledWords == null) {
       return null;
     }
-    if (shuffeled_words!.isEmpty) {
+    if (shuffledWords!.isEmpty) {
       return null;
     }
-    current_index = current_index % shuffeled_words!.length;
-    String picked = shuffeled_words![current_index++];
+    currentIndex = currentIndex % shuffledWords!.length;
+    String picked = shuffledWords![currentIndex++];
     return picked;
   }
 
@@ -103,7 +103,7 @@ class _MenuState extends State<Menu> {
               margin: const EdgeInsets.only(top: 50),
               child: MainButton(onPress: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const Words())
+                  MaterialPageRoute(builder: (_) => const Words())
                 );
               }, btnText: "Mots"),
             ),
@@ -111,7 +111,7 @@ class _MenuState extends State<Menu> {
               margin: const EdgeInsets.only(top: 50),
               child: MainButton(onPress: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => const Settings())
+                  MaterialPageRoute(builder: (_) => const Settings())
                 );
               }, btnText: "Paramètres"),
             ),
@@ -119,13 +119,13 @@ class _MenuState extends State<Menu> {
               margin: const EdgeInsets.only(top: 50),
               child: MainButton(onPress: () {
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return const AlertDialog(
-                        title: Text("Règles du jeu"),
-                        content: Text("Lorem ipsum dolor sit amet"),
-                      );
-                    }
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const AlertDialog(
+                      title: Text("Règles du jeu"),
+                      content: Text("Lorem ipsum dolor sit amet"),
+                    );
+                  }
                 );
               }, btnText: "Règles"),
             ),
