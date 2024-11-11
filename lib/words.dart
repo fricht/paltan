@@ -88,9 +88,11 @@ class _WordsState extends State<Words> {
             margin: const EdgeInsets.only(top: 10, bottom: 10),
             child: TextField(
               decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                focusColor: color4,
                 hintText: "rechercher ou ajouter un mot",
                 suffixIcon: IconButton(
-                  icon: const Icon(Icons.add),
+                  icon: Icon(Icons.add, color: isAddable ? color2 : Colors.blueGrey),
                   onPressed: !isAddable ? null : () {
                     FocusScope.of(context).unfocus();
                     addWord(makeTextPretty(_searchController.text));
@@ -113,7 +115,7 @@ class _WordsState extends State<Words> {
                 return ListTile(
                   title: Text(filteredWords[index]),
                   trailing: IconButton(
-                    icon: const Icon(Icons.delete_forever),
+                    icon: const Icon(Icons.delete_forever, color: color3),
                     onPressed: () => removeWord(filteredWords[index]),
                   ),
                 );
