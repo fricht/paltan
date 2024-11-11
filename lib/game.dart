@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:paltan/utils.dart';
 
 
 class GameEntry extends StatefulWidget {
@@ -58,12 +59,14 @@ class _GameEntryState extends State<GameEntry> with SingleTickerProviderStateMix
           return Stack(
             children: [
               Container(
-                color: Colors.amber,
+                color: Color.lerp(color1, color2, timeController.value / 2.0),
                 height: MediaQuery.of(context).size.height * timeController.value,
               ),
               Center(
                 child: Text(
-                  style: const TextStyle(
+                  style: TextStyle(
+                    fontStyle: [FontStyle.normal, FontStyle.italic, FontStyle.normal, FontStyle.normal][currentText],
+                    fontWeight: [FontWeight.normal, FontWeight.bold, FontWeight.normal, FontWeight.normal][currentText],
                     fontSize: 50,
                   ),
                   ["Prêts ?", widget.word, "Dessinez", "Devinez"][currentText],
