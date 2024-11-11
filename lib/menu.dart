@@ -84,10 +84,6 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const Icon(Icons.timer),
-        title: const Text("Paltan"),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -96,71 +92,42 @@ class _MenuState extends State<Menu> {
               "Paltan",
               style: TextStyle(
                 fontSize: 80,
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
+                color: color3,
               ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 50),
-              child: SizedBox(
-                width: 150,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: launchGame,
-                  child: const Text("Jouer"),
-                ),
-              ),
+              child: MainButton(onPress: launchGame, btnText: "Jouer"),
             ),
             Container(
               margin: const EdgeInsets.only(top: 50),
-              child: SizedBox(
-                width: 150,
-                height: 50,
-                child: ElevatedButton(
-                  child: const Text("Mots"),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const Words())
-                    );
-                  },
-                ),
-              ),
+              child: MainButton(onPress: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const Words())
+                );
+              }, btnText: "Mots"),
             ),
             Container(
               margin: const EdgeInsets.only(top: 50),
-              child: SizedBox(
-                width: 150,
-                height: 50,
-                child: ElevatedButton(
-                  child: const Text("Paramètres"),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const Settings())
-                    );
-                  },
-                ),
-              ),
+              child: MainButton(onPress: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const Settings())
+                );
+              }, btnText: "Paramètres"),
             ),
             Container(
               margin: const EdgeInsets.only(top: 50),
-              child: SizedBox(
-                width: 150,
-                height: 50,
-                child: ElevatedButton(
-                  child: const Text("Règles"),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const AlertDialog(
-                          title: Text("Règles du jeu"),
-                          content: Text("Lorem ipsum dolor sit amet"),
-                        );
-                      }
-                    );
-                  },
-                ),
-              ),
+              child: MainButton(onPress: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const AlertDialog(
+                        title: Text("Règles du jeu"),
+                        content: Text("Lorem ipsum dolor sit amet"),
+                      );
+                    }
+                );
+              }, btnText: "Règles"),
             ),
           ],
         ),
